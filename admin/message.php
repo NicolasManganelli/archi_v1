@@ -61,9 +61,15 @@ if(isset($_GET['action']))
 		else{
 			$class="lu";			
 			}
+			if(isset($_SESSION['id_contact']) && $_SESSION['id_contact']==$ligne->id_contact){
+
+				$open=" open";
+			}else{
+				$open="";
+			}
 		//premiere ligne visible
 		$tab_resultats.="<tr>\n";	
-		$tab_resultats.="<td class=\"".$class."\"><a href=\"admin.php?module=messages&action=marquer_message&id_contact=".$ligne->id_contact."\">".$ligne->nom_contact." ".$ligne->prenom_contact."</a></td>\n";
+		$tab_resultats.="<td class=\"".$class.$open"\"><a href=\"admin.php?module=messages&action=marquer_message&id_contact=".$ligne->id_contact."\">".$ligne->nom_contact." ".$ligne->prenom_contact."</a></td>\n";
 		$tab_resultats.="<td>".$ligne->date_contact."</td>\n";
 		$tab_resultats.="<td>
 		<a href=\"admin.php?module=messages&action=supprimer_message&id_contact=".$ligne->id_contact."\">
@@ -73,16 +79,11 @@ if(isset($_GET['action']))
 
 		//deuxieme ligne visible si clic
 		$tab_resultats.="<tr>\n";
-		if(isset($_SESSION['id_contact']) && $_SESSION['id_contact']==$ligne->id_contact){
-
-			$open=" class=\"open\"";
-		}else{
-			$open="";
-		}
+	
 
 
 
-		$tab_resultats.="<td".$open." colspan=\"3\">
+		$tab_resultats.="<td class=\"".$open." colspan=\"3\">
 						<strong>Expediteur : </strong>" . $ligne->mel_contact . "<br />";
 		$tab_resultats.="<strong>Message</strong>
 						<br />" . $ligne->message_contact . "</td>\n";
