@@ -6,38 +6,37 @@ require_once("../outils/fonctions.php");
 $connexion=connexion();
 
 //on calcule les notifications des nouveaux messages
-$requete="SELECT id_contact FROM contacts WHERE lu=0";
+$requete="SELECT lu FROM contacts WHERE lu=0";
 $resultat=mysqli_query($connexion,$requete);
 $nb_lignes=mysqli_num_rows($resultat);
 $notification=" <span class=\"notif\">".$nb_lignes."</span>";	
 
 
 //si admin.php reçoit le parametre action (si un client a cliqué sur un bouton)
-if(isset($_GET['action']))
+if(isset($_GET['module']))
 	{
-	$contenu="form_" . $_GET['action'] . ".html";	
-	switch($_GET['action'])
+	$contenu="form_" . $_GET['action'] . "form_messages.html";	
+	switch($_GET['module'])
 		{
 		case "comptes":
-		
+			include_once ("comptes.php");
 		break;	
 		
 		case "actus":
-
+			include_once ("actus.php");
 		break;	
 		
 		case "slider":
-
+			include_once ("slider.php");
 		break;	
-		
-		case "messagerie":
-			$contenu="messagerie.html";
-			
-		break;		
-		}	
+
+		case "messages" :
+			include_once("message.php");
+		break;
 	}
-else//personne n'a cliqué sur un bouton ( à l'arrivée sur le tableau de bord)
-	{
+			
+} else {//personne n'a cliqué sur un bouton ( à l'arrivée sur le tableau de bord)
+	
 	$contenu="intro.html";
 	}
 

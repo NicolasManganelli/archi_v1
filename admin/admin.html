@@ -13,10 +13,10 @@
 			<ul>
 				<li><a href="../index.php">VOIR LE SITE</a></li>
 				<li><a href="admin.php">HOME</a></li>
-				<li><a href="admin.php?action=comptes">GESTION DES COMPTES</a></li>
-				<li><a href="admin.php?action=actus">GESTION DES ACTUS</a></li>
-				<li><a href="admin.php?action=slider">GESTION DU SLIDER</a></li>
-				<li><a href="admin.php?action=messagerie">MESSAGERIE<?php if(isset($notification)){echo $notification;} ?></a></li>				
+				<li><a href="admin.php?module=comptes">GESTION DES COMPTES</a></li>
+				<li><a href="admin.php?module=actus">GESTION DES ACTUS</a></li>
+				<li><a href="admin.php?module=slider">GESTION DU SLIDER</a></li>
+				<li><a href="admin.php?module=messages&action=afficher_message">MESSAGERIE<?php if(isset($notification)){echo $notification;} ?></a></li>				
 			</ul>
 		</nav>
 	</aside>
@@ -30,6 +30,9 @@
 			if(isset($contenu))
 				{
 				include($contenu);
+				}
+				if (isset($tab_resultats)){
+					echo $tab_resultats;
 				}
 			?>
 		</section>
