@@ -1,6 +1,8 @@
 <?php
+
+	if (isset($_SESSION['id_compte'])){
+
 //permet l'usage des variables de session
-session_start();
 $open=array();
 if(isset($_GET['action']))
 	{
@@ -92,5 +94,8 @@ if(isset($_GET['action']))
 		}
 	$tab_resultats.="</table>\n";		
 	}	
-
+}
+else{
+	header("Location:../index.php");
+	}
 ?>

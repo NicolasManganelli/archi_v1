@@ -1,5 +1,8 @@
 <?php
-if(isset($_GET['action']))
+
+	if (isset($_SESSION['id_compte'])){
+
+	if(isset($_GET['action']))
 	{
 	switch($_GET['action'])
 		{
@@ -11,6 +14,9 @@ if(isset($_GET['action']))
 		
 		break;		
 		}
-	}		
-		
+	}
+	else{
+		header("Location:../index.php");
+		}
+}	
 ?>
