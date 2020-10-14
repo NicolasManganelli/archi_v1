@@ -10,38 +10,44 @@ if(isset($_SESSION['id_compte']))
 			//2. on insert les champs dans la table comptes (modele : front.php)
 			if(isset($_POST['submit']))
 				{
+				//on gere la liste déroulante des statuts
+				if(!empty($_POST['statut_compte']))
+				  {
+				  $selected[$_POST['statut_compte']]= "selected=\"selected\"";
+				  }		
 				if(empty($_POST['nom_compte']))
 					{
-					$message="<label class=\"pas_ok\">Mets ton nom</label>";	
+					$message="<label class=\"pas_ok\">Mettez votre nom</label>";	
 					$color['nom_compte']="class=\"avertissement\" ";						
 					}					
 				elseif(empty($_POST['prenom_compte']))
 					{
-					$message="<label class=\"pas_ok\">Mets ton prénom</label>";	
+					$message="<label class=\"pas_ok\">Mettez votre prénom</label>";	
 					$color['prenom_compte']="class=\"avertissement\" ";						
 					}	
 				elseif(empty($_POST['login_compte']))
 					{
-					$message="<label class=\"pas_ok\">Mets ton login</label>";	
+					$message="<label class=\"pas_ok\">Mettez votre login</label>";	
 					$color['login_compte']="class=\"avertissement\" ";						
 					}
 				elseif(empty($_POST['statut_compte']))
 					{
-					$message="<label class=\"pas_ok\">Mets ton statut</label>";	
+					$message="<label class=\"pas_ok\">Mettez votre statut</label>";	
 					$color['statut_compte']="class=\"avertissement\" ";						
 					}					
 				elseif(empty($_POST['pass_compte']))
 					{
-					$message="<label class=\"pas_ok\">Mets ton pass</label>";	
+					$message="<label class=\"pas_ok\">Mettez votre pass</label>";	
 					$color['pass_compte']="class=\"avertissement\" ";						
 					}
 				else{
-					$requete="INSERT INTO comptes SET nom_compte='',
-													  prenom_compte='',
-													  login_compte='',
-													  statut_compte='',
-													  pass_compte=''";
-					
+					$requete="INSERT INTO comptes SET nom_compte='".$_POST['nom_compte']."',
+													  prenom_compte='".$_POST['prenom_compte']."',
+													  login_compte='".$_POST['login_compte']."',
+													  statut_compte='".$_POST['statut_compte']."',
+													  pass_compte=SHA1('".$_POST['pass_compte']."')";
+					$resultat=mysqli_query($connexion,$requete);
+					$message="<label class=\"ok\">Nouveau compte créé</label>";
 					}
 				}
 			break;
@@ -71,7 +77,7 @@ if(isset($_SESSION['id_compte']))
 			$tab_resultats.="</tr>";	
 			}
 		$tab_resultats.="</table>";
-		}		
+		}
 	}
 else{
 	header("Location:../index.php");	
