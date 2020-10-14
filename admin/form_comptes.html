@@ -4,11 +4,11 @@
 	<input <?php if(isset($color['prenom_compte'])){echo $color['prenom_compte'];} ?>type="text" name="prenom_compte" value="<?php if(isset($_POST['prenom_compte'])){echo $_POST['prenom_compte'];} ?>" placeholder="Prénom *" />
 	<input <?php if(isset($color['login_compte'])){echo $color['login_compte'];} ?>type="text" name="login_compte" value="<?php if(isset($_POST['login_compte'])){echo $_POST['login_compte'];} ?>" placeholder="Identifiant *" />	
 	
-	
+	<label for="statut_compte">Renseignez votre</label>
 	<select name="statut_compte"  id="statut_compte" <?php if(isset($color['statut_compte'])){echo $color['statut_compte'];} ?>>
 		<option value="">Statut</option>
-		<option value="user"<?php if(isset($selected['user'])){echo $selected['user'];} ?>Utilisateur</option>
-		<option value="admin"<?php if(isset($selected['admin'])){echo $selected['admin'];} ?>Administrateur</option>
+		<option value="user"<?php if(isset($selected['user'])){echo $selected['user'];} ?>>Utilisateur</option>
+		<option value="admin"<?php if(isset($selected['admin'])){echo $selected['admin'];} ?>>Administrateur</option>
 	</select>	
 	
 	<input <?php if(isset($color['pass_compte'])){echo $color['pass_compte'];} ?>type="password" name="pass_compte" value="<?php if(isset($_POST['pass_compte'])){echo $_POST['pass_compte'];} ?>" placeholder="Mot de passe *" />	

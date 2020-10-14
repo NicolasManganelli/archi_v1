@@ -150,7 +150,8 @@ body{
 }
 
 #contenu_back input,
-#contenu_back textarea{
+#contenu_back textarea,
+#contenu_back select{
 	display:block;
 	padding:8px 15px;
 	border:none;
@@ -247,7 +248,7 @@ body{
 	border-radius: 5px;
 	background-color: rgb(36, 139, 70);
 	color:white;
-	margin:0 10px;
+	margin:20px;
 	text-decoration: none;
 	font-size:1.2rem;
 	box-shadow:2px 2px 2px 1px rgb(88, 87, 87);
@@ -270,3 +271,10 @@ body{
 .open{
 	background-color: #a1b4c2;
 }
+
+.avertissement{
+	background-color:orange;
+	color:#fff;
+}
+.pas_ok{color:orange;display:block;padding:5px 0}
+.ok{color:green;display:block;padding:5px 0}

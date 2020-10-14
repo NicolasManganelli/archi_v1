@@ -27,7 +27,7 @@ if(isset($_SESSION['id_compte']))
 			break;	
 
 			case "comptes":
-
+			include_once("comptes.php");		
 			break;
 			
 			case "actus":
