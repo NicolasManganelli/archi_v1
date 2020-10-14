@@ -11,11 +11,11 @@ $nca = count($carac);//On determine le nombre de lettres possible
 // Nom de la police à utiliser
 $font =__DIR__ .  "/adler.ttf";
  
-//On determine les tailles de limage
+//On determine les tailles de l'image
 $x = $ncarac*30+20;
 $y = 40;
 
-//On cree limage
+//On créé l'image
 $img = imagecreatetruecolor($x,$y);
 
 //pour rendre le fond transparent
@@ -43,7 +43,7 @@ for($i=1;$i<=$ncarac;$i++)//On ajoute $ncarac caracteres
 //On ajoute les lignes
 for($i=1;$i<=$nlignes;$i++)//On ajoute "$nlignes" lignes
 	{
-	imagesetthickness($img,rand(1,3));//On specifie lepaisseur de la ligne
+	imagesetthickness($img,rand(1,3));//On specifie l'epaisseur de la ligne
 	imageline($img,rand(0,$x),rand(0,$y),rand(0,$x),rand(0,$y), imagecolorallocate($img, rand(0,100), rand(0,100), rand(0,100)));//On ajoute la ligne
 	}
 
