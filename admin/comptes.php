@@ -82,4 +82,31 @@ if(isset($_SESSION['id_compte']))
 			}
 			
 		//1. calculer l'affichage du tableau de la liste des comptes	
-		
+		$tab_resultats="<table class=\"tab_resultats\">\n";
+		$tab_resultats.="<tr>";
+		$tab_resultats.="<th>Identité</th>";
+		$tab_resultats.="<th>Login</th>";
+		$tab_resultats.="<th>Statut</th>";
+		$tab_resultats.="<th>Actions</th>";
+		$tab_resultats.="</tr>";
+		$requete="SELECT * FROM comptes ORDER BY id_compte DESC";
+		$resultat=mysqli_query($connexion,$requete);
+		while($ligne=mysqli_fetch_object($resultat))
+			{
+			$tab_resultats.="<tr>";	
+			$tab_resultats.="<td>" . $ligne->prenom_compte . " " . $ligne->nom_compte . "</td>";
+			$tab_resultats.="<td>" . $ligne->login_compte . "</td>";
+			$tab_resultats.="<td>" . $ligne->statut_compte . "</td>";
+			$tab_resultats.="<td>
+			<a href=\"admin.php?module=comptes&action=supprimer_compte&statut_compte=".$ligne->statut_compte."&id_compte=".$ligne->id_compte."\">
+			<span class=\"dashicons dashicons-no-alt\"></span>
+			</a></td>\n";			
+			$tab_resultats.="</tr>";	
+			}
+		$tab_resultats.="</table>";
+		}
+	}
+else{
+	header("Location:../index.php");	
+	}		
+?>
