@@ -69,7 +69,7 @@ if(isset($_GET['action']))
 			}
 		//premiere ligne visible
 		$tab_resultats.="<tr>\n";	
-		$tab_resultats.="<td class=\"".$class.$open"\"><a href=\"admin.php?module=messages&action=marquer_message&id_contact=".$ligne->id_contact."\">".$ligne->nom_contact." ".$ligne->prenom_contact."</a></td>\n";
+		$tab_resultats.="<td class=\"".$class.$open="\"><a href=\"admin.php?module=messages&action=marquer_message&id_contact=".$ligne->id_contact."\">".$ligne->nom_contact." ".$ligne->prenom_contact."</a></td>\n";
 		$tab_resultats.="<td>".$ligne->date_contact."</td>\n";
 		$tab_resultats.="<td>
 		<a href=\"admin.php?module=messages&action=supprimer_message&id_contact=".$ligne->id_contact."\">
