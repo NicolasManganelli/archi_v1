@@ -12,6 +12,8 @@ body{
 	overflow:hidden;
 }
 
+
+
 #zone_gauche{
 	width:var(--width_admin);
 	position:fixed;
@@ -79,6 +81,24 @@ body{
 	height:80px;
 	background:#265a63;
 }
+
+.bienvenue{
+	color: white;
+	font-size: 1.2rem;
+	text-align: flex-end;
+}
+
+#bienvenue2{
+	display:flex;
+	align-items: center;
+	
+}
+
+#bienvenue a{
+	padding-left:20px;
+}
+
+
 
 /************************************/
 #menu_back{

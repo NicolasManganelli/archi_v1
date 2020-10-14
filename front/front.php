@@ -1,11 +1,20 @@
 <?php
+
+session_start();
 //je connecte la librairie de fonctions php
 require_once("../outils/fonctions.php");
 //je stocke dans une variable ($connexion)
 //le résultat de la fonction connexion()
 $connexion=connexion();
-$contact="form_contact.html";
 
+// On edite un bouton de retour pour revenir au back
+// si un utilisateur est connecté au back
+if (isset($_SESSION['id_compte'])){
+	$retour_back="<div id=\"back\"><a href=\"../admin/admin.php\">Retour Back</div>";
+}
+
+
+$contact="form_contact.html";
 //on teste si le bouton "ENVOYER" a été utilisé
 if(isset($_POST['submit']))
 	{

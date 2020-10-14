@@ -23,7 +23,14 @@
 	<main id="zone_droite">
 		<header id="header_back">
 			<h1>Bienvenue sur le back</h1>
-			<a href="../index.php"><span class="dashicons dashicons-no"></span></a>
+
+			<div id="bienvenue2">
+				<span class="bienvenue">
+					<?php if(isset($bienvenue)) {echo $bienvenue;} ?></span>
+				<a href="admin.php?module=deconnecter"><span class="dashicons dashicons-no"></span></a>
+			</div>
+
+			
 		</header>
 		<section id="contenu_back">
 			<?php

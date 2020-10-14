@@ -1,7 +1,13 @@
 <?php
 session_start();
+// Sio la personne st autorisée acceder au back
 if(isset($_SESSION['id_compte']))
 	{
+		// on calcul une phrase de bienvenue
+		$bienvenue=$_SESSION['prenom_compte'] ." ". substr ( $_SESSION ['nom_compte'],0,1)  . " [" . $_SESSION ['statut_compte'] . "]";
+
+
+
 	//je connecte la librairie de fonctions php
 	require_once("../outils/fonctions.php");
 	//je stocke dans une variable ($connexion)
@@ -14,8 +20,10 @@ if(isset($_SESSION['id_compte']))
 		$contenu="form_" . $_GET['module'] . ".html";	
 		switch($_GET['module'])
 			{
-			case "comptes":
-			include_once("comptes.php");
+			case "deconnecter":
+				// Permet de detruire toutes les variables de session
+			session_destroy();
+			header("location:../log");
 			break;	
 			
 			case "actus":
