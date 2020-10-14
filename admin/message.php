@@ -78,7 +78,7 @@ if(isset($_SESSION['id_compte']))
 			</a></td>\n";
 			$tab_resultats.="</tr>\n";
 
-			//deuxieme ligne visible si clic
+			// Deuxieme ligne visible si clic
 			$tab_resultats.="<tr>\n";
 
 			$tab_resultats.="<td class=\"".$open."\" colspan=\"3\">

@@ -25,6 +25,10 @@ if(isset($_SESSION['id_compte']))
 			session_destroy();
 			header("location:../log");
 			break;	
+
+			case "comptes":
+
+			break;
 			
 			case "actus":
 
