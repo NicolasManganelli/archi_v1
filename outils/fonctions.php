@@ -258,9 +258,9 @@ function afficher_comptes($connexion,$requete)
 			}
 		$affichage.="<td style=\"text-align:center\">" . $avatar . "</td>\n";		
 		$affichage.="<td>";
-		$affichage.="<a href=\"admin.php?action=compte&choix=modifier&id_compte=" . $ligne->id_compte . "\"><span class=\"dashicons dashicons-edit\"></span></a>";
+		$affichage.="<a href=\"admin.php?module=comptes&action=modifier_compte&id_compte=" . $ligne->id_compte . "\"><span class=\"dashicons dashicons-edit\"></span></a>";
 		$affichage.="&nbsp;&nbsp;&nbsp;";
-		$affichage.="<a href=\"admin.php?action=compte&choix=supprimer&id_compte=" . $ligne->id_compte . "\"><span class=\"dashicons dashicons-trash\"></span></a>";
+		$affichage.="<a href=\"admin.php?module=comptes&action=supprimer_compte&statut_compte=" . $ligne->statut_compte . "&id_compte=" . $ligne->id_compte . "\"><span class=\"dashicons dashicons-no-alt\"></span></a>";
 		$affichage.="</td>\n";						
 		$affichage.="</tr>\n";
 		$i++;					
@@ -399,120 +399,36 @@ function afficher_articles($connexion,$requete,$cas)
 	}
 	
 //=======================================
-function afficher_menu($connexion,$requete,$cas)
+function afficher_menus($connexion,$requete)
 	{
 	$resultat=mysqli_query($connexion,$requete);
 	
-	if(isset($cas))
+	$affichage="<table class=\"tab_resultats\">\n";
+	//on calcule les entêtes des colonnes
+	$affichage.="<tr>\n";				
+	$affichage.="<th>Position</th>\n";					
+	$affichage.="<th>Intitulé</th>\n";			
+	$affichage.="<th>Actions</th>\n";
+	$affichage.="</tr>\n";	
+	while($ligne=mysqli_fetch_object($resultat))
 		{
-		switch($cas)
-			{
-			case "back":
-
-			$i=0;
-			$affichage="<table class=\"tab_resultats\">\n";
-			//on calcule les entêtes des colonnes
-			$affichage.="<tr>\n";
-			$affichage.="<th>Tri</th>\n";					
-			$affichage.="<th>Position</th>\n";					
-			$affichage.="<th>Intitulé</th>\n";
-			$affichage.="<th>Dashicon</th>\n";	
-			$affichage.="<th>Type</th>\n";				
-			$affichage.="<th>Actions</th>\n";
-			$affichage.="</tr>\n";	
-			while($ligne=mysqli_fetch_object($resultat))
-				{
-				//on affiche le contenu de chaque uplet présent dans la table
-				$affichage.="<tr>\n";
-				$affichage.="<td><a href=\"admin.php?action=menu&choix=trier&id_menu=" . $ligne->id_menu . "&tri=up\"><span class=\"dashicons dashicons-arrow-up\"></span></a>&nbsp;&nbsp;<a href=\"admin.php?action=menu&choix=trier&id_menu=" . $ligne->id_menu . "&tri=down\"><span class=\"dashicons dashicons-arrow-down\"></span></a></td>\n";	
-				$affichage.="<td>" . $ligne->rang_menu . "</td>\n";				
-				$affichage.="<td><a href=\"" . $ligne->lien_menu . "\" target=\"_blank\">" . $ligne->intitule_menu . "</a></td>\n";
-				$affichage.="<td  class=\"td_img\"><span class=\"" .  $ligne->dashicon_menu . "\"></span></td>\n";
-				$affichage.="<td style=\"text-align:center\">" . $ligne->type_menu . "</td>\n";				
-				$affichage.="<td>";		
-				$affichage.="<a href=\"admin.php?action=menu&choix=modifier&id_menu=" . $ligne->id_menu . "\"><span class=\"dashicons dashicons-edit\"></span></a>";
-				$affichage.="&nbsp;&nbsp;&nbsp;";
-				$affichage.="<a href=\"admin.php?action=menu&choix=supprimer&id_menu=" . $ligne->id_menu . "\"><span class=\"dashicons dashicons-trash\"></span></a>";
-				$affichage.="</td>\n";						
-				$affichage.="</tr>\n";
-				$i++;					
-				}
-			$affichage.="</table>\n";
-			
-			break;
-
-			case "front":
-			
-			$i=0;
-			$affichage="<ul class=\"dispo_flex\">\n";
-
-			while($ligne=mysqli_fetch_object($resultat))
-				{
-				//on affiche le contenu de chaque uplet présent dans la table
-				$affichage.="<li>\n";
-				$affichage.="<a href=\"" . $ligne->lien_menu ."\">";		
-				$affichage.="<span class=\"" . $ligne->dashicon_menu . "\"></span>";
-				$affichage.="<br />" . $ligne->intitule_menu;
-				$affichage.="</a>";				
-				$affichage.="</li>\n";
-				$i++;					
-				}
-			$affichage.="</ul>\n";
-			
-			break;	
-
-			case "menu_back":
-			
-			$i=0;
-			$affichage="<ul class=\"dispo_flex\">\n";
-
-			while($ligne=mysqli_fetch_object($resultat))
-				{
-				//on affiche le contenu de chaque uplet présent dans la table
-				$affichage.="<li>\n";
-				$affichage.="<a href=\"" . $ligne->lien_menu ."\">";		
-				$affichage.="<span class=\"" . $ligne->dashicon_menu . "\"></span>";
-				$affichage.="<br />" . $ligne->intitule_menu;
-				$affichage.="</a>";				
-				$affichage.="</li>\n";
-				$i++;					
-				}
-			$affichage.="</ul>\n";
-			
-			break;				
-			}		
+		//on affiche le contenu de chaque uplet présent dans la table
+		$affichage.="<tr>\n";
+		$affichage.="<td>" . $ligne->rang_menu . "</td>\n";				
+		$affichage.="<td><a href=\"" . $ligne->lien_menu . "\" target=\"_blank\">" . $ligne->intitule_menu . "</a></td>\n";
+		$affichage.="<td>";		
+		$affichage.="<a href=\"admin.php?module=menus&action=modifier_menu&id_menu=" . $ligne->id_menu . "\"><span class=\"dashicons dashicons-edit\"></span></a>";
+		$affichage.="&nbsp;&nbsp;&nbsp;";
+		$affichage.="<a href=\"admin.php?module=menus&action=supprimer_menu&id_menu=" . $ligne->id_menu . "\"><span class=\"dashicons dashicons-no-alt\"></span></a>";
+		$affichage.="</td>\n";						
+		$affichage.="</tr>\n";
+		$i++;					
 		}
+	$affichage.="</table>\n";
 
 	return $affichage;
 	}
 	
-	
-//==============================================================
-function afficher_droits($connexion)
-	{
-	$requete="SELECT d.*,m.* FROM droits d INNER JOIN menus m ON d.id_menu=m.id_menu WHERE m.type_menu='back' ORDER BY m.rang_menu";
-	//echo $requete;
-	$resultat=mysqli_query($connexion, $requete); 
-	$affichage="<table class=\"tab_resultats\">\n";
-	//on calcule les entêtes des colonnes
-	$affichage.="<tr>\n";
-	$affichage.="<th>Module</th>\n";
-	$affichage.="<th>Admin</th>\n";	
-	$affichage.="<th>User</th>\n";
-	$affichage.="</tr>\n";	
-	while($ligne=mysqli_fetch_object($resultat))
-		{
-		$affichage.="<tr>\n";
-		$affichage.="<td>" . $ligne->intitule_menu . "</td>\n";		
-		$affichage.="<td style=\"text-align:center\"><a style=\"text-decoration:none;color:#000\" href=\"admin.php?action=droits&id_droit=" . $ligne->id_droit . "&statut=admin&valeur=" . $ligne->admin . "\"><img src=\"../images/" . $ligne->admin . ".png\" alt=\"\" /></a></td>";
-		$affichage.="<td style=\"text-align:center\"><a style=\"text-decoration:none;color:#000\" href=\"admin.php?action=droits&id_droit=" . $ligne->id_droit . "&statut=user&valeur=" . $ligne->user . "\"><img src=\"../images/" . $ligne->user . ".png\" alt=\"\" /></a></td>";		
-		$affichage.="</tr>\n";	
-		}
-	$affichage.="</table>\n";	
-	
-	return $affichage;	
-	}
-
 ?>
 
 

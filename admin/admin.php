@@ -1,13 +1,11 @@
 <?php
 session_start();
-// Sio la personne st autorisée acceder au back
+//si la personne est autorisée à acceder au back
 if(isset($_SESSION['id_compte']))
 	{
-		// on calcul une phrase de bienvenue
-		$bienvenue=$_SESSION['prenom_compte'] ." ". substr ( $_SESSION ['nom_compte'],0,1)  . " [" . $_SESSION ['statut_compte'] . "]";
-
-
-
+	//on calcule une phrase de bienvenue
+	$bienvenue=$_SESSION['prenom_compte'] . " " . substr($_SESSION['nom_compte'],0,1) . " [Statut:" . $_SESSION['statut_compte'] . "]";
+		
 	//je connecte la librairie de fonctions php
 	require_once("../outils/fonctions.php");
 	//je stocke dans une variable ($connexion)
@@ -21,14 +19,18 @@ if(isset($_SESSION['id_compte']))
 		switch($_GET['module'])
 			{
 			case "deconnecter":
-				// Permet de detruire toutes les variables de session
+			//permet de détruire l'ensemble des variables de session
 			session_destroy();
-			header("location:../log");
+			header("Location:../log");
 			break;	
-
+			
+			case "menus":
+			include_once("menus.php");
+			break;	
+			
 			case "comptes":
-			include_once("comptes.php");		
-			break;
+			include_once("comptes.php");
+			break;	
 			
 			case "actus":
 
@@ -52,14 +54,16 @@ if(isset($_SESSION['id_compte']))
 	$requete="SELECT lu FROM contacts WHERE lu=0";
 	$resultat=mysqli_query($connexion,$requete);
 	$nb_lignes=mysqli_num_rows($resultat);
-	if ($nb_lignes>0){
-		$notification=" <span class=\"notif\">".$nb_lignes."</span>";
-	}
-			
+	if($nb_lignes>0)
+		{
+		$notification=" <span class=\"notif\">".$nb_lignes."</span>";		
+		}
+		
 	mysqli_close($connexion);
 	include("admin.html");
 	}
-else{
+else
+	{
 	header("Location:../index.php");
 	}
 ?>

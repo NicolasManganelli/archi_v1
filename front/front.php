@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 //je connecte la librairie de fonctions php
 require_once("../outils/fonctions.php");
@@ -7,12 +6,12 @@ require_once("../outils/fonctions.php");
 //le résultat de la fonction connexion()
 $connexion=connexion();
 
-// On edite un bouton de retour pour revenir au back
-// si un utilisateur est connecté au back
-if (isset($_SESSION['id_compte'])){
-	$retour_back="<div id=\"back\"><a href=\"../admin/admin.php\">Retour Back</div>";
-}
-
+//on calcule un bouton de retour pour revenir au back
+//si un utilisateur est connecté au back
+if(isset($_SESSION['id_compte']))
+	{
+	$retour_back="<div id=\"back\"><a href=\"../admin/admin.php\">RETOUR BACK</a></div>";	
+	}
 
 $contact="form_contact.html";
 //on teste si le bouton "ENVOYER" a été utilisé

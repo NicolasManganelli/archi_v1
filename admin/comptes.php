@@ -7,6 +7,7 @@ if(isset($_SESSION['id_compte']))
 			{
 			case "afficher_comptes":
 			$entete="<h1>Gestion des comptes</h1>";
+			$action_form="afficher_comptes";
 			//2. on insert les champs dans la table comptes (modele : front.php)
 			if(isset($_POST['submit']))
 				{
@@ -41,15 +42,74 @@ if(isset($_SESSION['id_compte']))
 					$color['pass_compte']="class=\"avertissement\" ";						
 					}
 				else{
-					$requete="INSERT INTO comptes SET nom_compte='".$_POST['nom_compte']."',
-													  prenom_compte='".$_POST['prenom_compte']."',
-													  login_compte='".$_POST['login_compte']."',
+					$requete="INSERT INTO comptes SET nom_compte='".addslashes($_POST['nom_compte'])."',
+													  prenom_compte='".addslashes($_POST['prenom_compte'])."',
+													  login_compte='".addslashes($_POST['login_compte'])."',
 													  statut_compte='".$_POST['statut_compte']."',
 													  pass_compte=SHA1('".$_POST['pass_compte']."')";
 					$resultat=mysqli_query($connexion,$requete);
 					$message="<label class=\"ok\">Nouveau compte créé</label>";
-					}
+					
+					//on vide tous les champs du formulaire
+					foreach($_POST AS $cle => $valeur)
+						{
+						unset($_POST[$cle]);	
+						}					
+					}	
 				}
+			break;
+			
+			case "modifier_compte":
+			
+			//si qq valide le formulaire (appui sur le bouton ENVOYER)
+			if(isset($_POST['submit']))
+				{
+				$requete="UPDATE comptes SET nom_compte='".addslashes($_POST['nom_compte'])."',
+										 prenom_compte='".addslashes($_POST['prenom_compte'])."',
+										 login_compte='".addslashes($_POST['login_compte'])."',
+										 statut_compte='".$_POST['statut_compte']."'";
+			
+				//si le champ pass_compte est rempli
+				if(!empty($_POST['pass_compte']))
+					{
+					$requete.=",pass_compte=SHA1('".$_POST['pass_compte']."')";				
+					}
+				$requete.=" WHERE id_compte='".$_GET['id_compte']."'";	
+				$resultat=mysqli_query($connexion,$requete);
+				$message="<label class=\"ok\">Le compte a été modifié</label>";
+				
+				//on se replace sur l'action afficher_comptes
+				$action_form="afficher_comptes";
+				
+				//on suprime la variable $_GET['id_compte']
+				//afin de ne pas executer le if(isset($_GET['id_compte'])) qui suit
+				unset($_GET['id_compte']);
+				
+				//on vide tous les champs du formulaire
+				foreach($_POST AS $cle => $valeur)
+					{
+					unset($_POST[$cle]);	
+					}		
+				}
+				
+			if(isset($_GET['id_compte']))
+				{
+				$action_form="modifier_compte&id_compte=" . $_GET['id_compte'];
+				
+				//on récupere dans la table comptes les infos du id_compte recu depuis l'url (methode GET)	
+				$requete="SELECT * FROM comptes WHERE id_compte='".$_GET['id_compte']."'";
+				$resultat=mysqli_query($connexion,$requete);
+				$ligne=mysqli_fetch_object($resultat);
+				
+				//on recharge le formulaire d'admin des comptes avec les données stockées dans la table
+				$_POST['nom_compte']=$ligne->nom_compte;
+				$_POST['prenom_compte']=$ligne->prenom_compte;
+				$_POST['login_compte']=$ligne->login_compte;
+				
+				//pour recharger une liste déroulante
+				$selected[$ligne->statut_compte]= "selected=\"selected\"";
+				}			
+			
 			break;
 			
 			case "supprimer_compte":
@@ -81,29 +141,8 @@ if(isset($_SESSION['id_compte']))
 			break;		
 			}
 			
-		//1. calculer l'affichage du tableau de la liste des comptes	
-		$tab_resultats="<table class=\"tab_resultats\">\n";
-		$tab_resultats.="<tr>";
-		$tab_resultats.="<th>Identité</th>";
-		$tab_resultats.="<th>Login</th>";
-		$tab_resultats.="<th>Statut</th>";
-		$tab_resultats.="<th>Actions</th>";
-		$tab_resultats.="</tr>";
 		$requete="SELECT * FROM comptes ORDER BY id_compte DESC";
-		$resultat=mysqli_query($connexion,$requete);
-		while($ligne=mysqli_fetch_object($resultat))
-			{
-			$tab_resultats.="<tr>";	
-			$tab_resultats.="<td>" . $ligne->prenom_compte . " " . $ligne->nom_compte . "</td>";
-			$tab_resultats.="<td>" . $ligne->login_compte . "</td>";
-			$tab_resultats.="<td>" . $ligne->statut_compte . "</td>";
-			$tab_resultats.="<td>
-			<a href=\"admin.php?module=comptes&action=supprimer_compte&statut_compte=".$ligne->statut_compte."&id_compte=".$ligne->id_compte."\">
-			<span class=\"dashicons dashicons-no-alt\"></span>
-			</a></td>\n";			
-			$tab_resultats.="</tr>";	
-			}
-		$tab_resultats.="</table>";
+		$tab_resultats=afficher_comptes($connexion,$requete);
 		}
 	}
 else{

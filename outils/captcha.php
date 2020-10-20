@@ -11,11 +11,11 @@ $nca = count($carac);//On determine le nombre de lettres possible
 // Nom de la police à utiliser
 $font =__DIR__ .  "/adler.ttf";
  
-//On determine les tailles de l'image
+//On determine les tailles de limage
 $x = $ncarac*30+20;
 $y = 40;
 
-//On créé l'image
+//On cree limage
 $img = imagecreatetruecolor($x,$y);
 
 //pour rendre le fond transparent
@@ -36,15 +36,15 @@ for($i=1;$i<=$ncarac;$i++)//On ajoute $ncarac caracteres
 	//couleur désirée pour le texte
 	//police du texte
 	//texte à écrire
-	imagettftext($img, 25, rand(-10,10), (($i-1)*30)+5, 30, imagecolorallocate($img, rand(0,100), rand(0,100), rand(20,100)),$font, $c);//On ajoute le caractere sur limage
+	imagettftext($img, 25, rand(-10,10), (($i-1)*30)+5, 30, imagecolorallocate($img, rand(20,100), rand(20,100), rand(20,100)),$font, $c);//On ajoute le caractere sur limage
 	$chaine .= $c;//On ajoute le nouveau caractere a la chaine
 	}
 	
 //On ajoute les lignes
 for($i=1;$i<=$nlignes;$i++)//On ajoute "$nlignes" lignes
 	{
-	imagesetthickness($img,rand(1,3));//On specifie l'epaisseur de la ligne
-	imageline($img,rand(0,$x),rand(0,$y),rand(0,$x),rand(0,$y), imagecolorallocate($img, rand(0,100), rand(0,100), rand(5,100)));//On ajoute la ligne
+	imagesetthickness($img,rand(1,3));//On specifie lepaisseur de la ligne
+	imageline($img,rand(0,$x),rand(0,$y),rand(0,$x),rand(0,$y), imagecolorallocate($img, rand(5,100), rand(5,100), rand(5,100)));//On ajoute la ligne
 	}
 
 //On stocke la chaine de caractere dans les sessions
