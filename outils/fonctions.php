@@ -422,7 +422,7 @@ function afficher_menus($connexion,$requete)
 		$affichage.="<a href=\"admin.php?module=menus&action=supprimer_menu&id_menu=" . $ligne->id_menu . "\"><span class=\"dashicons dashicons-no-alt\"></span></a>";
 		$affichage.="</td>\n";						
 		$affichage.="</tr>\n";
-		$i++;					
+							
 		}
 	$affichage.="</table>\n";
 

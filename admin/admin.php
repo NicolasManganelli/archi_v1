@@ -33,7 +33,7 @@ if(isset($_SESSION['id_compte']))
 			break;	
 			
 			case "actus":
-
+				include_once("sliders.php");
 			break;	
 			
 			case "slider":
@@ -41,7 +41,7 @@ if(isset($_SESSION['id_compte']))
 			break;
 
 			case "messages":
-			include_once("message.php");
+			include_once("messages.php");
 			break;		
 			}	
 		}
