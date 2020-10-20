@@ -13,6 +13,27 @@ if(isset($_SESSION['id_compte']))
 	$retour_back="<div id=\"back\"><a href=\"../admin/admin.php\">RETOUR BACK</a></div>";	
 	}
 
+
+
+
+	
+//on calcule les items du menu
+$menu_haut="<nav id=\"menu_haut\" role=\"navigation\"><ul>";
+$requete="SELECT * FROM menus ORDER BY rang_menu";
+$resultat=mysqli_query($connexion, $requete);
+while($ligne=mysqli_fetch_object($resultat))
+    {
+    $menu_haut.="<li><a href=\"".$ligne->lien_menu."\">".$ligne->intitule_menu."</a></li>";    
+    }
+$menu_haut.="</ul></nav>";
+
+
+
+
+
+
+
+
 $contact="form_contact.html";
 //on teste si le bouton "ENVOYER" a été utilisé
 if(isset($_POST['submit']))

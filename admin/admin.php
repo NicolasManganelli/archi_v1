@@ -4,7 +4,7 @@ session_start();
 if(isset($_SESSION['id_compte']))
 	{
 	//on calcule une phrase de bienvenue
-	$bienvenue=$_SESSION['prenom_compte'] . " " . substr($_SESSION['nom_compte'],0,1) . " [Statut:" . $_SESSION['statut_compte'] . "]";
+	$bienvenue=$_SESSION['fichier_compte'] . $_SESSION['prenom_compte'] . " " . substr($_SESSION['nom_compte'],0,1) . " [Statut:" . $_SESSION['statut_compte'] . "]";
 		
 	//je connecte la librairie de fonctions php
 	require_once("../outils/fonctions.php");
@@ -33,11 +33,11 @@ if(isset($_SESSION['id_compte']))
 			break;	
 			
 			case "actus":
-				include_once("sliders.php");
+				include_once("actus.php");
 			break;	
 			
-			case "slider":
-
+			case "sliders":
+				include_once("sliders.php");
 			break;
 
 			case "messages":

@@ -42,14 +42,61 @@ if(isset($_SESSION['id_compte']))
 					$color['pass_compte']="class=\"avertissement\" ";						
 					}
 				else{
+					//on insere dans la table sliders les champs autres que FILE
 					$requete="INSERT INTO comptes SET nom_compte='".addslashes($_POST['nom_compte'])."',
-													  prenom_compte='".addslashes($_POST['prenom_compte'])."',
-													  login_compte='".addslashes($_POST['login_compte'])."',
-													  statut_compte='".$_POST['statut_compte']."',
-													  pass_compte=SHA1('".$_POST['pass_compte']."')";
-					$resultat=mysqli_query($connexion,$requete);
-					$message="<label class=\"ok\">Nouveau compte créé</label>";
+											  prenom_compte='".addslashes($_POST['prenom_compte'])."',
+											  login_compte='".addslashes($_POST['login_compte'])."',
+											  statut_compte='".$_POST['statut_compte']."',
+											  pass_compte=SHA1('".$_POST['pass_compte']."')";
+	
+				$resultat=mysqli_query($connexion, $requete);
+					$dernier_id_cree=mysqli_insert_id($connexion);
 					
+					if(!empty($_FILES['fichier_compte']['name']))
+						{
+						//on teste si le fichier a le bon format
+						if(fichier_type($_FILES['fichier_compte']['name'])=="png" ||
+						   fichier_type($_FILES['fichier_compte']['name'])=="jpg" ||
+						   fichier_type($_FILES['fichier_compte']['name'])=="gif")
+							{
+							//on génère les 2 chemins des fichiers image : le big et le small
+							$chemin_b="../medias/avatar_b" . $dernier_id_cree . "." . fichier_type($_FILES['fichier_compte']['name']);
+							$chemin_s="../medias/avatar_s" . $dernier_id_cree . "." . fichier_type($_FILES['fichier_compte']['name']);						
+							
+							if(is_uploaded_file($_FILES['fichier_compte']['tmp_name']))
+							//tmp_name correspond au nom temporaire donné au fichier lors de sa copie sur le serveur
+								{                                
+								if(copy($_FILES['fichier_compte']['tmp_name'], $chemin_b))
+									{
+									//On calcule les dimensions de l'image originelle
+									$size=GetImageSize($chemin_b);
+									$largeur=$size[0];
+									$hauteur=$size[1];
+									$rapport=$largeur/$hauteur;
+									//si $rapport>1 alors image paysage
+									//si $rapport<1 alors image portrait
+									//si $rapport=1 alors image carrée
+									
+									//on genere une miniature en respectant l'homothétie
+									$largeur_mini=60;
+									$quality=80;
+									redimage($chemin_b,$chemin_s,$largeur_mini,$largeur_mini/$rapport,$quality);
+									
+									//on met la jour la table sliders avec le chemin du fichier
+									$requete2="UPDATE comptes 
+												SET fichier_compte='" . $chemin_s . "' 
+												WHERE id_compte='".$dernier_id_cree."'";
+	
+									$resultat2=mysqli_query($connexion, $requete2);			
+									$message="<label class=\"ok\">Le compte a bien été créé</label>";			
+									}									
+								}
+							}
+						else{
+							$message="<label class=\"pas_ok\">Seules les extensions png, gif et jpg sont autorisées</label>";	
+							$color['fichier_slider']="class=\"avertissement\" ";
+							}					
+						}
 					//on vide tous les champs du formulaire
 					foreach($_POST AS $cle => $valeur)
 						{

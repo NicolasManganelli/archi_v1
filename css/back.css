@@ -15,6 +15,10 @@ h1{text-align:center;margin:20px 0}
 #bienvenue{display:flex;align-items:center}
 #bienvenue a{padding-left:20px;text-decoration:none;color:#000}
 
+#bienvenue span{
+	padding-right: 50px;
+}
+
 #zone_gauche{
 	width:var(--width_admin);
 	position:fixed;
@@ -199,6 +203,16 @@ h1{text-align:center;margin:20px 0}
 	text-align:left;
 }
 
+.tab_resultats img{
+	height: 40px;
+	border-radius: 5px;
+}
+
+.tab_resultats img:hover{
+	transform: scale(1.5);
+	transition: 0.5s all;
+}
+
 .ouinon{display:flex;align-items:center;justify-content: center;}
 .ouinon a{
 	display:block;
@@ -232,3 +246,4 @@ h1{text-align:center;margin:20px 0}
 }
 .pas_ok{color:orange;display:block;padding:5px 0}
 .ok{color:green;display:block;padding:5px 0}
+
